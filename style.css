@@ -1,0 +1,19 @@
+* {border: 1px Solid red}
+
+body {
+  height: 100vh;
+}
+
+main {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(20,1fr);
+  grid-template-rows: repeat(20,1fr);
+}
+
+#board-container {
+  grid-column: 8 / 13;
+  grid-row: 6 / 16;
+  min-width: 450px;
+  min-height: 390px;
+}
