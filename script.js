@@ -1,10 +1,27 @@
 
+const gameBoard = function () {
+  const boardArray = ['', '', '', '', '', '', '', '', ''];
 
-const Gamer = function(symbol) {
+  const updatedBoard = function() {
+    return boardArray;
+  };
+
+};
+
+
+
+const Gamer = function(player,symbol) {
+  this.player = player;
   this.symbol = symbol;
-}
+};
+
+const gameFlow = function () {
+  const board = gameBoard;
+
+};
 
 
 
 
-const gameboard = ['', '', '', '', '', '', '', '', ''];
+
+
