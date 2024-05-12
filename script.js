@@ -21,10 +21,7 @@ function Gameboard() {
   const getCellValue = function(cell) {
     return cell
   };
-
-
-
-  
+ 
 }
 
 function gameController(playerOne,Playertwo) {
