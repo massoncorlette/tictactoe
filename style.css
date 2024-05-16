@@ -16,4 +16,13 @@ main {
   grid-row: 6 / 16;
   min-width: 450px;
   min-height: 390px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.board-divs {
+  background-color: aqua;
+  border: 1px solid pink;
+  display: flex;
 }
