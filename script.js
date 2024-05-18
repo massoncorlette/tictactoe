@@ -63,13 +63,29 @@ const gameFlow = function () {
       }
     }
     activePlayer.ownArray.push(chosenCell);
+    let counter = 0;
+    for (let i = 0; i < winningCombos.length;i++){
+      counter = 0;
+      for (let j = 0; j < winningCombos[i].length;j++){
+        if (chosenCell === winningCombos[i][j]) {
+          counter += 1;
+          if (counter === 3) {
+            return activePlayer.player;
+          }
+        }
+      }
+    }
     switchPlayer();
   }
+  console.log(activePlayer);
   return {
     nextMove:nextMove
   }
 };
 gameFlow();
+
+
+
 
 
 
