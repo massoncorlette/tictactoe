@@ -38,41 +38,20 @@ const gameFlow = function () {
     [3, 5, 7]
   ];
 
-  const playerOne = new Gamer("Player One", 'X');
-  const playerTwo = new Gamer("Player Two", 'O');
-  const board = gameBoard();
-  let activeBoard = board.updatedBoard;
+  let playerOne = new Gamer("Player One", 'X');
+  let playerTwo = new Gamer("Player Two", 'O');
+  let board = gameBoard();
+
+  playerOne.ownArray.push(1,3);
+  
   let activePlayer = playerOne;
 
-  function switchPlayerTurn() {
-    if (activePlayer === playerOne) {
-        activePlayer = playerTwo;
-    } else {
-        activePlayer = playerOne;
-    }
-  };
+  activePlayer.ownArray.push(5);
 
-  const nextRound = function(chosenCell) {
-    for (let i = 0; i < activeBoard.length; i++){
-      if (activeBoard[i] === chosenCell) {
-        return nextMove();
-      }else if(activeBoard === null) {
-        console.log("Tie");
-      }
-    };
-
-    function nextMove() {
-      activeBoard = activeBoard.filter(chosenCell);
-      activePlayer.ownArray.push(chosenCell);
-      switchPlayerTurn();
-    };
-  };
-  return {
-    nextRound: nextRound
-  };
+  console.log(activePlayer);
 };
-let round = gameFlow();
-console.log(round.nextRound(3));
+gameFlow();
+
 
 
 const boardContainer = document.querySelector('#board-container');
