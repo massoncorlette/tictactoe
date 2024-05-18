@@ -41,14 +41,33 @@ const gameFlow = function () {
   let playerOne = new Gamer("Player One", 'X');
   let playerTwo = new Gamer("Player Two", 'O');
   let board = gameBoard();
-
-  playerOne.ownArray.push(1,3);
-  
   let activePlayer = playerOne;
 
-  activePlayer.ownArray.push(5);
+  function switchPlayer() {
+    if(activePlayer === playerOne) {
+      activePlayer = playerTwo;
+    }else{
+      activePlayer = playerOne;
+    }
+  };
 
-  console.log(activePlayer);
+  function filterBoard(chosenCell) {
+      
+  };
+
+  const nextMove = function(chosenCell) {
+    for (let i = 0; i < activePlayer.ownArray.length; i++) {
+      if (activePlayer.ownArray[i] === chosenCell) {
+        console.log("invalid");
+        return;
+      }
+    }
+    activePlayer.ownArray.push(chosenCell);
+    switchPlayer();
+  }
+  return {
+    nextMove:nextMove
+  }
 };
 gameFlow();
 
