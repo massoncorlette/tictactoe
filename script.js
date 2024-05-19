@@ -27,6 +27,9 @@ const Gamer = function(player,symbol,tracker,wins) {
   this.ownArray = [];
 };
 
+let playerOne = new Gamer("Player One", 'X');
+let playerTwo = new Gamer("Player Two", 'O');
+
 const gameFlow = function () {
   const winningCombos = [
     [1, 2, 3],
@@ -39,20 +42,20 @@ const gameFlow = function () {
     [3, 5, 7]
   ];
 
-  let playerOne = new Gamer("Player One", 'X');
-  let playerTwo = new Gamer("Player Two", 'O');
   let board = gameBoard();
   let activePlayer = playerOne;
 
   const switchPlayer = function() {
-    const playerSymbol = activePlayer.symbol;
     if(activePlayer === playerOne) {
       activePlayer = playerTwo;
     }else{
       activePlayer = playerOne;
     }
-    return playerSymbol;
   };
+
+  const returnSymbol = function() {
+    return activePlayer.symbol;
+  }
 
   const nextMove = function(chosenCell) {
     for (let i = 0; i < activePlayer.ownArray.length; i++) {
@@ -83,7 +86,8 @@ const gameFlow = function () {
   console.log(playerTwo);
   return {
     nextMove:nextMove,
-    switchPlayer:switchPlayer
+    switchPlayer:switchPlayer,
+    returnSymbol:returnSymbol
   }
 };
 
@@ -103,6 +107,7 @@ let game = gameFlow();
 allCells.forEach((cell, index) => {
   cell.addEventListener("click", () => {
     game.nextMove(index + 1); 
+    cell.innerHTML = game.returnSymbol();
     game.switchPlayer;
     console.log(game.switchPlayer());
     console.log(`Cell ${index + 1}`, cell);
