@@ -51,42 +51,38 @@ const gameFlow = function () {
     }
   };
 
-  function filterBoard(chosenCell) {
-      
-  };
-
   const nextMove = function(chosenCell) {
     for (let i = 0; i < activePlayer.ownArray.length; i++) {
       if (activePlayer.ownArray[i] === chosenCell) {
         console.log("invalid");
         return;
-      }
-    }
+      };
+    };
     activePlayer.ownArray.push(chosenCell);
+    // check winning combinations
     let counter = 0;
     for (let i = 0; i < winningCombos.length;i++){
       counter = 0;
-      for (let j = 0; j < winningCombos[i].length;j++){
+      for (let j = 0; j < 3;j++){
         if (chosenCell === winningCombos[i][j]) {
           counter += 1;
+          console.log(counter);
           if (counter === 3) {
+            console.log(activePlayer.player);
             return activePlayer.player;
           }
-        }
-      }
-    }
+        };
+      };
+    };
     switchPlayer();
   }
-  console.log(activePlayer);
+  console.log(playerOne);
+  console.log(playerTwo);
   return {
     nextMove:nextMove
   }
 };
 gameFlow();
-
-
-
-
 
 
 const boardContainer = document.querySelector('#board-container');
@@ -97,6 +93,17 @@ for (let i = 0; i < 9; i++) {
   boardContainer.appendChild(newCell);
 };
 
+let allCells = document.querySelectorAll('.board-divs');
+
+let game = gameFlow();
+//index argument in forEach used for iteration
+//each index number maps onto each cell correctly
+allCells.forEach((cell, index) => {
+  cell.addEventListener("click", () => {
+    game.nextMove(index + 1); 
+    console.log(`Cell ${index + 1}`, cell);
+  });
+});
 
 
 
