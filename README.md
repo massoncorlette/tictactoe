@@ -3,38 +3,28 @@ Focusing on factory functions, IIFEs, and tucking code away in a organized way
 
 pseudocode
 ////////////////
+function gameFlow
+	array of winningCombos
+	active player
 
-array p1
-array p2
+  function to switchPlayer
 
-gameBoard()
+  function to return values != chosenCell
+
+  function nextMove
+    push chosenCell value if not already in playerArray
+      with a nested loop check for winning combo
+    switchPlayer();
 	
-	function to return updated board
+	//checking winning combos loop //
+	playertracker = 0
+	going through array of combos
+		going through the array size 3
+                 going through playerArray
+		  if chosencell = playerarray[i][j]
+                   playertracker += 1
 
-	function to drop player symbol
-		return value of board cell
 
-gameFlow(playerOne,playerTwo)
-	array of winning combos
-	boardArray
-
-	function to switchPlayerTurn
-
-	function to nextRound(chosencell)
-		if chosencell in boardArray
-			Call nextMove
-		else
-			break
-
-          nextMove function	
-	   filter board(chosencell)
-	    put the filtered number 
-	    into playersArray
-	    check player array for win
-	    check for tie
-	   call switchPlayerTurn
-		
-		
 winning combos: 1,2,3 - 4,5,6 -7,8,9 - 1,4,7 - 2,5,8 - 3,6,9 
 - 1,5,9 - 3,5,7
 	

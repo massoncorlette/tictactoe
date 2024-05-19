@@ -19,10 +19,11 @@ let test = gameBoard();
 let tested = test.updatedBoard();
 console.log(tested);
 
-const Gamer = function(player,symbol,points) {
+const Gamer = function(player,symbol,tracker,wins) {
   this.player = player;
   this.symbol = symbol;
-  this.points = points;
+  this.tracker = tracker;
+  this.wins = wins;
   this.ownArray = [];
 };
 
@@ -43,12 +44,14 @@ const gameFlow = function () {
   let board = gameBoard();
   let activePlayer = playerOne;
 
-  function switchPlayer() {
+  const switchPlayer = function() {
+    const playerSymbol = activePlayer.symbol;
     if(activePlayer === playerOne) {
       activePlayer = playerTwo;
     }else{
       activePlayer = playerOne;
     }
+    return playerSymbol;
   };
 
   const nextMove = function(chosenCell) {
@@ -60,30 +63,29 @@ const gameFlow = function () {
     };
     activePlayer.ownArray.push(chosenCell);
     // check winning combinations
-    let counter = 0;
     for (let i = 0; i < winningCombos.length;i++){
-      counter = 0;
+      activePlayer.tracker = 0;
       for (let j = 0; j < 3;j++){
-        if (chosenCell === winningCombos[i][j]) {
-          counter += 1;
-          console.log(counter);
-          if (counter === 3) {
-            console.log(activePlayer.player);
-            return activePlayer.player;
-          }
+        for (let k = 0; k < activePlayer.ownArray.length; k++){
+          if (activePlayer.ownArray[k] === winningCombos[i][j]) {
+            activePlayer.tracker += 1;
+            console.log(activePlayer.tracker);
+            if (activePlayer.tracker === 3) {
+              console.log(activePlayer.player);
+              return activePlayer.player;
+            }
+          };
         };
       };
     };
-    switchPlayer();
   }
   console.log(playerOne);
   console.log(playerTwo);
   return {
-    nextMove:nextMove
+    nextMove:nextMove,
+    switchPlayer:switchPlayer
   }
 };
-gameFlow();
-
 
 const boardContainer = document.querySelector('#board-container');
 
@@ -101,6 +103,8 @@ let game = gameFlow();
 allCells.forEach((cell, index) => {
   cell.addEventListener("click", () => {
     game.nextMove(index + 1); 
+    game.switchPlayer;
+    console.log(game.switchPlayer());
     console.log(`Cell ${index + 1}`, cell);
   });
 });

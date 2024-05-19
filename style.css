@@ -22,7 +22,6 @@ main {
 }
 
 .board-divs {
-  background-color: aqua;
   border: 1px solid pink;
   display: flex;
 }
