@@ -1,4 +1,7 @@
+const closeDialog = document.getElementById('closeDialog');
+
 const gameBoard = function () {
+  const boardContainer = document.querySelector('#board-container');
   const boardArray = [];
   const cells = 9; 
 
@@ -6,18 +9,27 @@ const gameBoard = function () {
     boardArray[i] = i + 1;
   }
 
-  const updatedBoard = function() {
-    return boardArray;
+  const displayBoard = function() {
+    for (let i = 0; i < 9; i++) {
+      const newCell = document.createElement('div');
+      newCell.classList.add('board-divs');
+      boardContainer.appendChild(newCell);
+    };
   };
 
+  const resetBoard = function(cell) {
+    cell.innerHTML = ' ';
+  }
+
   return {
-    updatedBoard: updatedBoard,
+    displayBoard:displayBoard,
+    resetBoard:resetBoard
   };
 
 };
 let test = gameBoard();
-let tested = test.updatedBoard();
-console.log(tested);
+test.displayBoard();
+
 
 const Gamer = function(player,symbol,tracker,wins) {
   this.player = player;
@@ -25,10 +37,14 @@ const Gamer = function(player,symbol,tracker,wins) {
   this.tracker = tracker;
   this.wins = wins;
   this.ownArray = [];
+
+  this.incrementWins = function() {
+    this.wins += 1;
+  };
 };
 
-let playerOne = new Gamer("Player One", 'X');
-let playerTwo = new Gamer("Player Two", 'O');
+let playerOne = new Gamer("Player One", 'X',0,0);
+let playerTwo = new Gamer("Player Two", 'O',0,0);
 
 const gameFlow = function () {
   const winningCombos = [
@@ -42,7 +58,6 @@ const gameFlow = function () {
     [3, 5, 7]
   ];
 
-  let board = gameBoard();
   let activePlayer = playerOne;
 
   const switchPlayer = function() {
@@ -58,6 +73,7 @@ const gameFlow = function () {
   }
 
   const nextMove = function(chosenCell) {
+    let displayWinner = document.querySelector('#winner-display');
     for (let i = 0; i < activePlayer.ownArray.length; i++) {
       if (activePlayer.ownArray[i] === chosenCell) {
         console.log("invalid");
@@ -72,10 +88,11 @@ const gameFlow = function () {
         for (let k = 0; k < activePlayer.ownArray.length; k++){
           if (activePlayer.ownArray[k] === winningCombos[i][j]) {
             activePlayer.tracker += 1;
-            console.log(activePlayer.tracker);
             if (activePlayer.tracker === 3) {
-              console.log(activePlayer.player);
-              return activePlayer.player;
+              activePlayer.incrementWins();
+              document.getElementById('dialog-box').showModal();
+              displayWinner.innerHTML = activePlayer.player + `${" Wins! "}` + activePlayer.player + `${" has "}` + activePlayer.wins + `${" wins."}`;
+              break;
             }
           };
         };
@@ -91,27 +108,27 @@ const gameFlow = function () {
   }
 };
 
-const boardContainer = document.querySelector('#board-container');
-
-for (let i = 0; i < 9; i++) {
-  const newCell = document.createElement('div');
-  newCell.classList.add('board-divs');
-  boardContainer.appendChild(newCell);
-};
-
 let allCells = document.querySelectorAll('.board-divs');
 
 let game = gameFlow();
+let board = gameBoard();
 //index argument in forEach used for iteration
 //each index number maps onto each cell correctly
 allCells.forEach((cell, index) => {
   cell.addEventListener("click", () => {
-    game.nextMove(index + 1); 
-    cell.innerHTML = game.returnSymbol();
-    game.switchPlayer;
-    console.log(game.switchPlayer());
-    console.log(`Cell ${index + 1}`, cell);
+    if (!cell.innerHTML) {
+      game.nextMove(index + 1); 
+      cell.innerHTML = game.returnSymbol();
+      game.switchPlayer();
+    }
   });
+});
+
+closeDialog.addEventListener("click", () => {
+  document.getElementById('dialog-box').close();
+   allCells.forEach((cell) => {
+    board.resetBoard(cell);
+   })
 });
 
 

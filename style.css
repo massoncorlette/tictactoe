@@ -11,6 +11,11 @@ main {
   grid-template-rows: repeat(20,1fr);
 }
 
+dialog {
+  background-color: rgba(46, 138, 34, 0.705);
+}
+
+
 #board-container {
   grid-column: 8 / 13;
   grid-row: 6 / 16;
