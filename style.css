@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Kode+Mono:wght@400..700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-* {border: 1px Solid red}
+* {border: 0px Solid red}
 
 body {
   height: 100vh;
@@ -39,16 +39,38 @@ dialog {
   height: 80px;
   width: 100px;
   border-radius: 10px;
+  z-index: 1;
 }
 
 #titleTxt {
   font-family: "Cinzel", sans-serif;
-  font-size: 12px;
- 
+  font-size: 15px;
+  position: absolute; 
+  top: 0;
+  bottom: 0;
+  grid-row: 10/20;
+  margin-right: 8px;
+  font-style: italic;
+  color: rgba(209, 180, 49, 0.596);
+}
+
+#titleTxt:hover {
+  cursor: default
+}
+
+#egyptImg {
+  z-index: 1;
 }
 
 .selectionBtns:hover {
   cursor: pointer;
+}
+
+#difficultyDiv {
+  width: 20%;
+  height: 20%;
+  background-color: blueviolet;
+  z-index: 1;
 }
 
 #board {

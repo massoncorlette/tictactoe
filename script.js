@@ -3,13 +3,7 @@ let main = document.querySelector('main');
 let titleScreen = document.getElementById('titlescreen');
 
 const gameBoard = function () {
-  const boardArray = [];
-  const cells = 9; 
-
-  for (let i = 0; i < cells; i++) {
-    boardArray[i] = i + 1;
-  }
-
+  
   const displayBoard = function() {
     let createContainer = document.createElement('div');
     createContainer.id = 'board';
@@ -22,11 +16,29 @@ const gameBoard = function () {
       newCell.classList.add('board-divs');
       boardContainer.appendChild(newCell);
     };
+    let allCells = document.querySelectorAll('.board-divs');
+    //index argument in forEach used for iteration
+    //each index number maps onto each cell correctly
+    allCells.forEach((cell, index) => {
+      cell.addEventListener("click", () => {
+        if (!cell.innerHTML) {
+          game.nextMove(index + 1); 
+          cell.innerHTML = game.returnSymbol();
+        }
+      });
+    });
+    closeDialog.addEventListener("click", () => {
+      document.getElementById('dialog-box').close();
+      allCells.forEach((cell) => {
+        board.resetBoard(cell);
+      })
+    });
   };
 
   const resetBoard = function(cell) {
     cell.innerHTML = null;
   }
+
   return {
     displayBoard:displayBoard,
     resetBoard:resetBoard
@@ -90,6 +102,7 @@ const gameFlow = function () {
         for (let k = 0; k < activePlayer.ownArray.length; k++){
           if (activePlayer.ownArray[k] === winningCombos[i][j]) {
             activePlayer.tracker += 1;
+            // upon winning
             if (activePlayer.tracker === 3) {
               activePlayer.incrementWins();
               activePlayer.ownArray = [];
@@ -105,13 +118,15 @@ const gameFlow = function () {
         };
       };
     };
+    game.switchPlayer();
   };
+
   console.log(playerOne);
   console.log(playerTwo);
   return {
     nextMove:nextMove,
     switchPlayer:switchPlayer,
-    returnSymbol:returnSymbol
+    returnSymbol:returnSymbol,
   }
 };
 let game = gameFlow();
@@ -124,13 +139,16 @@ document.addEventListener("DOMContentLoaded", () => {
   let btnTwo = document.createElement('button');
   let titleTxt = document.createElement('p');
   titleTxt.id = 'titleTxt';
-  titleTxt.textContent = 'This is placeholder Text';
+  titleTxt.textContent = 'برج إله الكلببرج إله الكلب يترجم بالملايين مع ديب كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. معاني وتعريفات الكلمات مع النطق والترجمات.  أكثر من الملايين يترجمون كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. المعاني ولماذا تعريفات الكلمات مع النطق والترجمات. ترجمة النصوص والمستندات على الفور وبدقة. تعزيز التعاون من خلال الترجمة اللغوية الدقيقة. جرب مترجمنا اللغوي الفعال الذي يترجم ملايين الأشخاص كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. معاني وتعريفات الكلمات مع النطق والترجمات. برج إله الكلب يترجم بالملايين مع ديب كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. معاني وتعريفات الكلمات مع النطق والترجمات. ترجمة النصوص والمستندات على الفور وبدقة. تعزيز التعاون من خلال الترجمة اللغوية الدقيقة. جرب مترجم لغة الذكاء الاصطناعي الفعال لدينابرج إله الكلببرج إله الكلب يترجم بالملايين مع ديب كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. معاني وتعريفات الكلمات مع النطق والترجمات. أكثر من الملايين يترجمون كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. المعاني ولماذا تعريفات الكلمات مع النطق والترجمات. ترجمة النصوص والمستندات على الفور وبدقة. تعزيز التعاون من خلال الترجمة اللغوية الدقيقة. جرب مترجمنا اللغوي الفعال الذي يترجم ملايين الأشخاص كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. معاني وتعريفات الكلمات مع النطق والترجمات. برج إله الكلب يترجم بالملايين مع ديب كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. معاني وتعريفات الكلمات مع النطق والترجمات. ترجمة النصوص والمستندات على الفور وبدقة. تعزيز التعاون من خلال الترجمة اللغوية الدقيقة. جرب مترجم لغة الذكاء الاصطناعي الفعال لدينابرج إله الكلببرج إله الكلب يترجم بالملايين مع ديب كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. معاني وتعريفات الكلمات مع النطق والترجمات. أكثر من الملايين يترجمون كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. المعاني ولماذا تعريفات الكلمات مع النطق والترجمات. ترجمة النصوص والمستندات على الفور وبدقة. تعزيز التعاون من خلال الترجمة اللغوية الدقيقة. جرب مترجمنا اللغوي الفعال الذي يترجم ملايين الأشخاص كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. معاني وتعريفات الكلمات مع النطق والترجمات. برج إله الكلب يترجم بالملايين مع ديب كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. معاني وتعريفات الكلمات مع النطق والترجمات. ترجمة النصوص والمستندات على الفور وبدقة. تعزيز التعاون من خلال الترجمة اللغوية الدقيقة. جرب مترجم لغة الذكاء الاصطناعي الفعال لدينابرج إله الكلببرج إله الكلب يترجم بالملايين مع ديب كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. معاني وتعريفات الكلمات مع النطق والترجمات. أكثر من الملايين يترجمون كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. المعاني ولماذا تعريفات الكلمات مع النطق والترجمات. ترجمة النصوص والمستندات على الفور وبدقة. تعزيز التعاون من خلال الترجمة اللغوية الدقيقة. جرب مترجمنا اللغوي الفعال الذي يترجم ملايين الأشخاص كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. معاني وتعريفات الكلمات مع النطق والترجمات. برج إله الكلب يترجم بالملايين مع ديب كل يوم. الشائعة: من الإسبانية إلى الإنجليزية، ومن الفرنسية إلى الإنجليزية، ومن اليابانية إلى الإنجليزية. حدد لغة المصدر. تم اختياره حاليًا وهو القاموس وقاموس المرادفات الأكثر شيوعًا لمتعلمي اللغة الإنجليزية. معاني وتعريفات الكلمات مع النطق والترجمات. ترجمة النصوص والمستندات على الفور وبدقة. جرب مترجم لغة الذكاء الاصطناعي الفعال لدينا';
   let selectionDiv = document.createElement('div');
   selectionDiv.classList.add('selectiondiv');
   btnOne.classList.add('selectionBtns');
+  btnTwo.classList.add('selectionBtns');
   btnOne.id = 'startBtn';
+  btnTwo.id = 'aiBtn';
   btnTwo.classList.add('selectionBtns');
   screen.src = 'images/egypttheme.jpg';
+  screen.id = 'egyptImg';
   selectionDiv.appendChild(btnOne);
   selectionDiv.appendChild(btnTwo);
   selectionDiv.appendChild(titleTxt);
@@ -138,31 +156,27 @@ document.addEventListener("DOMContentLoaded", () => {
   titleScreen.appendChild(selectionDiv);
 
   let startBtn = document.querySelector('#startBtn');
+  let aiBtn = document.querySelector('#aiBtn');
 
   startBtn.addEventListener('click', () => {
     board.displayBoard();
-
-    let allCells = document.querySelectorAll('.board-divs');
-
-    //index argument in forEach used for iteration
-    //each index number maps onto each cell correctly
-    allCells.forEach((cell, index) => {
-      cell.addEventListener("click", () => {
-        if (!cell.innerHTML) {
-          game.nextMove(index + 1); 
-          cell.innerHTML = game.returnSymbol();
-          game.switchPlayer();
-        }
-      });
-    });
-
-    closeDialog.addEventListener("click", () => {
-      document.getElementById('dialog-box').close();
-      allCells.forEach((cell) => {
-        board.resetBoard(cell);
-      })
-    });
   });
+
+  aiBtn.addEventListener('click', () => {
+    let selectionBtns = document.querySelector('.selectiondiv');
+    let difficultyDiv = document.createElement('div');
+    let btnNormal = document.createElement('button');
+    let btnHard = document.createElement('button');
+    
+    difficultyDiv.id = 'difficultyDiv';
+    btnNormal.id = 'btnNormal';
+    btnHard.id = 'btnHard';
+    
+    selectionBtns.removeChild(startBtn);
+    selectionBtns.removeChild(aiBtn);
+    selectionBtns.appendChild(difficultyDiv);
+
+  })
 });
 
 
