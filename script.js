@@ -1,7 +1,7 @@
 const closeDialog = document.getElementById('closeDialog');
 
 const gameBoard = function () {
-  const boardContainer = document.querySelector('#board-container');
+  const boardContainer = document.querySelector('#board');
   const boardArray = [];
   const cells = 9; 
 
@@ -18,18 +18,13 @@ const gameBoard = function () {
   };
 
   const resetBoard = function(cell) {
-    cell.innerHTML = ' ';
+    cell.innerHTML = null;
   }
-
   return {
     displayBoard:displayBoard,
     resetBoard:resetBoard
   };
-
 };
-let test = gameBoard();
-test.displayBoard();
-
 
 const Gamer = function(player,symbol,tracker,wins) {
   this.player = player;
@@ -90,6 +85,11 @@ const gameFlow = function () {
             activePlayer.tracker += 1;
             if (activePlayer.tracker === 3) {
               activePlayer.incrementWins();
+              activePlayer.ownArray = [];
+              playerOne.tracker = 0;
+              playerTwo.tracker = 0;
+              playerOne.ownArray = [];
+              playerTwo.ownArray = [];
               document.getElementById('dialog-box').showModal();
               displayWinner.innerHTML = activePlayer.player + `${" Wins! "}` + activePlayer.player + `${" has "}` + activePlayer.wins + `${" wins."}`;
               break;
@@ -98,7 +98,7 @@ const gameFlow = function () {
         };
       };
     };
-  }
+  };
   console.log(playerOne);
   console.log(playerTwo);
   return {
@@ -129,6 +129,23 @@ closeDialog.addEventListener("click", () => {
    allCells.forEach((cell) => {
     board.resetBoard(cell);
    })
+});
+
+// upon page loading in
+document.addEventListener("DOMContentLoaded", () => {
+  let screen = document.createElement('img');
+  let btnOne = document.createElement('button');
+  let btnTwo = document.createElement('button');
+  let selectionDiv = document.createElement('div');
+  selectionDiv.classList.add('selectiondiv');
+  btnOne.classList.add('selectionBtns');
+  btnTwo.classList.add('selectionBtns');
+  screen.src = 'images/egypttheme.jpg';
+  let titleScreen = document.getElementById('titlescreen');
+  selectionDiv.appendChild(btnOne);
+  selectionDiv.appendChild(btnTwo);
+  titleScreen.appendChild(screen);
+  titleScreen.appendChild(selectionDiv);
 });
 
 

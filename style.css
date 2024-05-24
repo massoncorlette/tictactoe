@@ -9,12 +9,38 @@ main {
   display: grid;
   grid-template-columns: repeat(20,1fr);
   grid-template-rows: repeat(20,1fr);
+  background-color: bisque;
 }
 
 dialog {
   background-color: rgba(46, 138, 34, 0.705);
 }
 
+#titlescreen {
+  display: flex;
+  flex: 1;
+  grid-column: 1/20;
+  grid-row: span 20;
+  grid-template-columns: repeat(10,1fr);
+}
+
+.selectiondiv {
+ display: flex;
+ flex: 1;
+ align-items: center;
+ justify-content: center;
+ gap: 40px;
+}
+
+.selectionBtns {
+  height: 80px;
+  width: 100px;
+  border-radius: 10px;
+}
+
+.selectionBtns:hover {
+  cursor: pointer;
+}
 
 #board-container {
   grid-column: 8 / 13;
