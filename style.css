@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Kode+Mono:wght@400..700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 * {border: 1px Solid red}
 
 body {
   height: 100vh;
+  font-family: 'PT Sans', sans-serif;
 }
 
 main {
@@ -38,11 +41,17 @@ dialog {
   border-radius: 10px;
 }
 
+#titleTxt {
+  font-family: "Cinzel", sans-serif;
+  font-size: 12px;
+ 
+}
+
 .selectionBtns:hover {
   cursor: pointer;
 }
 
-#board-container {
+#board {
   grid-column: 8 / 13;
   grid-row: 6 / 16;
   min-width: 450px;

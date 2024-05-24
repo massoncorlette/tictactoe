@@ -1,7 +1,8 @@
 const closeDialog = document.getElementById('closeDialog');
+let main = document.querySelector('main');
+let titleScreen = document.getElementById('titlescreen');
 
 const gameBoard = function () {
-  const boardContainer = document.querySelector('#board');
   const boardArray = [];
   const cells = 9; 
 
@@ -10,6 +11,12 @@ const gameBoard = function () {
   }
 
   const displayBoard = function() {
+    let createContainer = document.createElement('div');
+    createContainer.id = 'board';
+    main.removeChild(titleScreen);
+    main.appendChild(createContainer);
+    let boardContainer = document.querySelector('#board');
+
     for (let i = 0; i < 9; i++) {
       const newCell = document.createElement('div');
       newCell.classList.add('board-divs');
@@ -107,46 +114,58 @@ const gameFlow = function () {
     returnSymbol:returnSymbol
   }
 };
-
-let allCells = document.querySelectorAll('.board-divs');
-
 let game = gameFlow();
 let board = gameBoard();
-//index argument in forEach used for iteration
-//each index number maps onto each cell correctly
-allCells.forEach((cell, index) => {
-  cell.addEventListener("click", () => {
-    if (!cell.innerHTML) {
-      game.nextMove(index + 1); 
-      cell.innerHTML = game.returnSymbol();
-      game.switchPlayer();
-    }
-  });
-});
-
-closeDialog.addEventListener("click", () => {
-  document.getElementById('dialog-box').close();
-   allCells.forEach((cell) => {
-    board.resetBoard(cell);
-   })
-});
 
 // upon page loading in
 document.addEventListener("DOMContentLoaded", () => {
   let screen = document.createElement('img');
   let btnOne = document.createElement('button');
   let btnTwo = document.createElement('button');
+  let titleTxt = document.createElement('p');
+  titleTxt.id = 'titleTxt';
+  titleTxt.textContent = 'This is placeholder Text';
   let selectionDiv = document.createElement('div');
   selectionDiv.classList.add('selectiondiv');
   btnOne.classList.add('selectionBtns');
+  btnOne.id = 'startBtn';
   btnTwo.classList.add('selectionBtns');
   screen.src = 'images/egypttheme.jpg';
-  let titleScreen = document.getElementById('titlescreen');
   selectionDiv.appendChild(btnOne);
   selectionDiv.appendChild(btnTwo);
+  selectionDiv.appendChild(titleTxt);
   titleScreen.appendChild(screen);
   titleScreen.appendChild(selectionDiv);
+
+  let startBtn = document.querySelector('#startBtn');
+
+  startBtn.addEventListener('click', () => {
+    board.displayBoard();
+
+    let allCells = document.querySelectorAll('.board-divs');
+
+    //index argument in forEach used for iteration
+    //each index number maps onto each cell correctly
+    allCells.forEach((cell, index) => {
+      cell.addEventListener("click", () => {
+        if (!cell.innerHTML) {
+          game.nextMove(index + 1); 
+          cell.innerHTML = game.returnSymbol();
+          game.switchPlayer();
+        }
+      });
+    });
+
+    closeDialog.addEventListener("click", () => {
+      document.getElementById('dialog-box').close();
+      allCells.forEach((cell) => {
+        board.resetBoard(cell);
+      })
+    });
+  });
 });
+
+
 
 
 
