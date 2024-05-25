@@ -37,23 +37,44 @@ const gameBoard = function () {
   const displayBoardAI = function(difficulty) {
     makeBoard();
     let allCells = document.querySelectorAll('.board-divs');
-    let aiBot = playerTwo;
     let moves = [1,2,3,4,5,6,7,8,9];
 
-    let currentMoves = moves.filter(availableMoves);
-
-    function availableMoves(cells) {
-      for (let i = 0; i < playerOne.ownArray.length; i++) {
-        return cells !== playerOne.ownArray[i];
-      };
+    function availableMoves(cell) {
+      return !playerOne.ownArray.includes(cell) && !playerTwo.ownArray.includes(cell);
     };
-    console.log(currentMoves);
 
-    if (difficulty === "Normal") {
-      let randomMove = currentMoves[Math.floor(Math.random() * currentMoves.length)];
-    }else if (difficulty === "Hard") {
+    function getAIMove() {
+      let randomMove = null;
+      let currentMoves = moves.filter(availableMoves);
+      console.log(currentMoves);
 
-    }
+      if (difficulty === "Normal") {
+        randomMove = currentMoves[Math.floor(Math.random() * currentMoves.length)];
+      }else if (difficulty === "Hard") {
+        randomMove = currentMoves[Math.floor(Math.random() * currentMoves.length)];
+      }
+      return randomMove;
+    }; 
+
+    allCells.forEach((cell, index) => {
+      cell.addEventListener("click", () => {
+        if (!cell.innerHTML) {
+          cell.innerHTML = game.returnSymbol();
+          game.nextMove(index + 1);
+          if (activePlayer === playerTwo) {
+            aiMove = getAIMove();
+            allCells[aiMove - 1].innerHTML = game.returnSymbol();
+            game.nextMove(aiMove);
+          } 
+        }
+      });
+    });
+    closeDialog.addEventListener("click", () => {
+      document.getElementById('dialog-box').close();
+      allCells.forEach((cell) => {
+        board.resetBoard(cell);
+      })
+    });  
   };
 
   const displayBoard = function() {
@@ -83,10 +104,10 @@ const gameBoard = function () {
 
   return {
     displayBoard:displayBoard,
+    displayBoardAI:displayBoardAI,
     resetBoard:resetBoard
   };
 };
-
 
 const gameFlow = function () {
   const winningCombos = [
@@ -207,6 +228,10 @@ document.addEventListener("DOMContentLoaded", () => {
     selectionBtns.removeChild(startBtn);
     selectionBtns.removeChild(aiBtn);
     selectionBtns.appendChild(difficultyDiv);
+
+   btnNormal.addEventListener('click', () => {
+    board.displayBoardAI(btnNormal.innerHTML);
+   })
 
   })
 });
