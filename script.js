@@ -2,49 +2,6 @@ const closeDialog = document.getElementById('closeDialog');
 let main = document.querySelector('main');
 let titleScreen = document.getElementById('titlescreen');
 
-const gameBoard = function () {
-  
-  const displayBoard = function() {
-    let createContainer = document.createElement('div');
-    createContainer.id = 'board';
-    main.removeChild(titleScreen);
-    main.appendChild(createContainer);
-    let boardContainer = document.querySelector('#board');
-
-    for (let i = 0; i < 9; i++) {
-      const newCell = document.createElement('div');
-      newCell.classList.add('board-divs');
-      boardContainer.appendChild(newCell);
-    };
-    let allCells = document.querySelectorAll('.board-divs');
-    //index argument in forEach used for iteration
-    //each index number maps onto each cell correctly
-    allCells.forEach((cell, index) => {
-      cell.addEventListener("click", () => {
-        if (!cell.innerHTML) {
-          game.nextMove(index + 1); 
-          cell.innerHTML = game.returnSymbol();
-        }
-      });
-    });
-    closeDialog.addEventListener("click", () => {
-      document.getElementById('dialog-box').close();
-      allCells.forEach((cell) => {
-        board.resetBoard(cell);
-      })
-    });
-  };
-
-  const resetBoard = function(cell) {
-    cell.innerHTML = null;
-  }
-
-  return {
-    displayBoard:displayBoard,
-    resetBoard:resetBoard
-  };
-};
-
 const Gamer = function(player,symbol,tracker,wins) {
   this.player = player;
   this.symbol = symbol;
@@ -60,6 +17,58 @@ const Gamer = function(player,symbol,tracker,wins) {
 let playerOne = new Gamer("Player One", 'X',0,0);
 let playerTwo = new Gamer("Player Two", 'O',0,0);
 
+const gameBoard = function () {
+
+  function makeBoard() {
+    let createContainer = document.createElement('div');
+    createContainer.id = 'board';
+    main.removeChild(titleScreen);
+    main.appendChild(createContainer);
+    let boardContainer = document.querySelector('#board');
+
+    for (let i = 0; i < 9; i++) {
+      const newCell = document.createElement('div');
+      newCell.classList.add('board-divs');
+      boardContainer.appendChild(newCell);
+    };
+  }
+
+  const displayBoardAI = function(difficulty) {
+
+  }
+
+  const displayBoard = function() {
+    makeBoard();
+    let allCells = document.querySelectorAll('.board-divs');
+    //index argument in forEach used for iteration
+    //each index number maps onto each cell correctly
+    allCells.forEach((cell, index) => {
+      cell.addEventListener("click", () => {
+        if (!cell.innerHTML) {
+          cell.innerHTML = game.returnSymbol();
+          game.nextMove(index + 1); 
+        }
+      });
+    });
+    closeDialog.addEventListener("click", () => {
+      document.getElementById('dialog-box').close();
+      allCells.forEach((cell) => {
+        board.resetBoard(cell);
+      })
+    });
+  };
+
+  const resetBoard = function(cell) {
+    cell.innerHTML = null;
+  };
+
+  return {
+    displayBoard:displayBoard,
+    resetBoard:resetBoard
+  };
+};
+
+
 const gameFlow = function () {
   const winningCombos = [
     [1, 2, 3],
@@ -74,13 +83,14 @@ const gameFlow = function () {
 
   let activePlayer = playerOne;
 
-  const switchPlayer = function() {
+  function switchPlayer() {
     if(activePlayer === playerOne) {
       activePlayer = playerTwo;
     }else{
       activePlayer = playerOne;
     }
   };
+
 
   const returnSymbol = function() {
     return activePlayer.symbol;
@@ -112,20 +122,19 @@ const gameFlow = function () {
               playerTwo.ownArray = [];
               document.getElementById('dialog-box').showModal();
               displayWinner.innerHTML = activePlayer.player + `${" Wins! "}` + activePlayer.player + `${" has "}` + activePlayer.wins + `${" wins."}`;
-              break;
+              return;
             }
           };
         };
       };
     };
-    game.switchPlayer();
+    switchPlayer();
   };
 
   console.log(playerOne);
   console.log(playerTwo);
   return {
     nextMove:nextMove,
-    switchPlayer:switchPlayer,
     returnSymbol:returnSymbol,
   }
 };
@@ -171,6 +180,13 @@ document.addEventListener("DOMContentLoaded", () => {
     difficultyDiv.id = 'difficultyDiv';
     btnNormal.id = 'btnNormal';
     btnHard.id = 'btnHard';
+
+    btnNormal.classList.add("selectionBtns");
+    btnHard.classList.add("selectionBtns");
+    btnNormal.innerHTML = "Normal";
+    btnHard.innerHTML = "Hard";
+    difficultyDiv.appendChild(btnNormal);
+    difficultyDiv.appendChild(btnHard);
     
     selectionBtns.removeChild(startBtn);
     selectionBtns.removeChild(aiBtn);

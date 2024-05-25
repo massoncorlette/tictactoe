@@ -67,8 +67,12 @@ dialog {
 }
 
 #difficultyDiv {
-  width: 20%;
-  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 40%;
+  height: 30%;
   background-color: blueviolet;
   z-index: 1;
 }
