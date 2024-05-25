@@ -16,6 +16,7 @@ const Gamer = function(player,symbol,tracker,wins) {
 
 let playerOne = new Gamer("Player One", 'X',0,0);
 let playerTwo = new Gamer("Player Two", 'O',0,0);
+let activePlayer = playerOne;
 
 const gameBoard = function () {
 
@@ -34,8 +35,26 @@ const gameBoard = function () {
   }
 
   const displayBoardAI = function(difficulty) {
+    makeBoard();
+    let allCells = document.querySelectorAll('.board-divs');
+    let aiBot = playerTwo;
+    let moves = [1,2,3,4,5,6,7,8,9];
 
-  }
+    let currentMoves = moves.filter(availableMoves);
+
+    function availableMoves(cells) {
+      for (let i = 0; i < playerOne.ownArray.length; i++) {
+        return cells !== playerOne.ownArray[i];
+      };
+    };
+    console.log(currentMoves);
+
+    if (difficulty === "Normal") {
+      let randomMove = currentMoves[Math.floor(Math.random() * currentMoves.length)];
+    }else if (difficulty === "Hard") {
+
+    }
+  };
 
   const displayBoard = function() {
     makeBoard();
@@ -81,8 +100,6 @@ const gameFlow = function () {
     [3, 5, 7]
   ];
 
-  let activePlayer = playerOne;
-
   function switchPlayer() {
     if(activePlayer === playerOne) {
       activePlayer = playerTwo;
@@ -90,7 +107,6 @@ const gameFlow = function () {
       activePlayer = playerOne;
     }
   };
-
 
   const returnSymbol = function() {
     return activePlayer.symbol;
@@ -101,7 +117,7 @@ const gameFlow = function () {
     for (let i = 0; i < activePlayer.ownArray.length; i++) {
       if (activePlayer.ownArray[i] === chosenCell) {
         console.log("invalid");
-        return;
+        return 1;
       };
     };
     activePlayer.ownArray.push(chosenCell);
