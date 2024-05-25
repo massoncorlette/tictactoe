@@ -159,6 +159,7 @@ const gameFlow = function () {
               playerTwo.ownArray = [];
               document.getElementById('dialog-box').showModal();
               displayWinner.innerHTML = activePlayer.player + `${" Wins! "}` + activePlayer.player + `${" has "}` + activePlayer.wins + `${" wins."}`;
+              switchPlayer();
               return;
             }
           };
