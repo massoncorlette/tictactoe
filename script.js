@@ -49,7 +49,7 @@ const gameBoard = function () {
       console.log(currentMoves);
 
       if (difficulty === "Normal") {
-        randomMove = currentMoves[Math.floor(Math.random() * currentMoves.length)];
+        randomMove = currentMoves[Math.floor(Math.random() * currentMoves.length )];
       }else if (difficulty === "Hard") {
         randomMove = currentMoves[Math.floor(Math.random() * currentMoves.length)];
       }
@@ -142,6 +142,8 @@ const gameFlow = function () {
       };
     };
     activePlayer.ownArray.push(chosenCell);
+    console.log(playerOne);
+    console.log(playerTwo);
     // check winning combinations
     for (let i = 0; i < winningCombos.length;i++){
       activePlayer.tracker = 0;
@@ -152,13 +154,13 @@ const gameFlow = function () {
             // upon winning
             if (activePlayer.tracker === 3) {
               activePlayer.incrementWins();
+              document.getElementById('dialog-box').showModal();
+              displayWinner.innerHTML = activePlayer.player + `${" Wins! "}` + activePlayer.player + `${" has "}` + activePlayer.wins + `${" wins."}`;
               activePlayer.ownArray = [];
               playerOne.tracker = 0;
               playerTwo.tracker = 0;
               playerOne.ownArray = [];
               playerTwo.ownArray = [];
-              document.getElementById('dialog-box').showModal();
-              displayWinner.innerHTML = activePlayer.player + `${" Wins! "}` + activePlayer.player + `${" has "}` + activePlayer.wins + `${" wins."}`;
               switchPlayer();
               return;
             }
@@ -168,9 +170,6 @@ const gameFlow = function () {
     };
     switchPlayer();
   };
-
-  console.log(playerOne);
-  console.log(playerTwo);
   return {
     nextMove:nextMove,
     returnSymbol:returnSymbol,
@@ -192,7 +191,9 @@ document.addEventListener("DOMContentLoaded", () => {
   btnOne.classList.add('selectionBtns');
   btnTwo.classList.add('selectionBtns');
   btnOne.id = 'startBtn';
+  btnOne.innerHTML = '2P';
   btnTwo.id = 'aiBtn';
+  btnTwo.innerHTML = 'AI';
   btnTwo.classList.add('selectionBtns');
   screen.src = 'images/egypttheme.jpg';
   screen.id = 'egyptImg';
