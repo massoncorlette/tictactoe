@@ -4,7 +4,7 @@
 
 body {
   height: 100vh;
-  font-family: 'PT Sans', sans-serif;
+  margin: 0%;
 }
 
 main {
@@ -24,7 +24,6 @@ dialog {
   flex: 1;
   grid-column: 1/20;
   grid-row: span 20;
-  grid-template-columns: repeat(10,1fr);
 }
 
 .selectiondiv {
@@ -33,6 +32,7 @@ dialog {
  align-items: center;
  justify-content: center;
  gap: 40px;
+ 
 }
 
 .selectionBtns {
@@ -40,21 +40,38 @@ dialog {
   width: 100px;
   border-radius: 10px;
   z-index: 1;
+  
 }
 
-#titleTxt {
+#designTxt {
   font-family: "Cinzel", sans-serif;
   font-size: 15px;
   position: absolute; 
   top: 0;
   bottom: 0;
-  grid-row: 10/20;
+  width: 60%;
+  overflow: hidden;
   margin-right: 8px;
   font-style: italic;
   color: rgba(209, 180, 49, 0.596);
 }
 
-#titleTxt:hover {
+#titleTxt {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  font-family: 'Cinzel', sans-serif;
+  font-size: 40px;
+  color: rgb(248, 153, 36);
+  position: absolute;
+  margin-bottom: 15%;
+  right: 0%;
+  background-color: rgba(255, 238, 0, 0.39);
+  width: 55%;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.219);
+}
+
+#designTxt:hover {
   cursor: default
 }
 
