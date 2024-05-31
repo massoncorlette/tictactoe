@@ -43,16 +43,17 @@ const gameBoard = function () {
       return !playerOne.ownArray.includes(cell) && !playerTwo.ownArray.includes(cell);
     };
 
-    function getAIMove() {
+    function getAIMove(chosenCell) {
       let randomMove = null;
       let currentMoves = moves.filter(availableMoves);
       console.log(currentMoves);
 
       if (difficulty === "Normal") {
         randomMove = currentMoves[Math.floor(Math.random() * currentMoves.length )];
+      // for hard mode implement minmax? 
       }else if (difficulty === "Hard") {
         for (let i = 0; i < currentMoves.length; i++) {
-          
+
         }
       };
       return randomMove;
@@ -135,18 +136,8 @@ const gameFlow = function () {
     return activePlayer.symbol;
   }
 
-  const nextMove = function(chosenCell) {
+  function checkWinningCombos() {
     let displayWinner = document.querySelector('#winner-display');
-    for (let i = 0; i < activePlayer.ownArray.length; i++) {
-      if (activePlayer.ownArray[i] === chosenCell) {
-        console.log("invalid");
-        return 1;
-      };
-    };
-    activePlayer.ownArray.push(chosenCell);
-    console.log(playerOne);
-    console.log(playerTwo);
-    // check winning combinations
     for (let i = 0; i < winningCombos.length;i++){
       activePlayer.tracker = 0;
       for (let j = 0; j < 3;j++){
@@ -163,17 +154,30 @@ const gameFlow = function () {
               playerTwo.tracker = 0;
               playerOne.ownArray = [];
               playerTwo.ownArray = [];
-              switchPlayer();
               return;
             }
           };
         };
       };
     };
+  };
+
+  const nextMove = function(chosenCell) {
+    for (let i = 0; i < activePlayer.ownArray.length; i++) {
+      if (activePlayer.ownArray[i] === chosenCell) {
+        console.log("invalid");
+        return 1;
+      };
+    };
+    activePlayer.ownArray.push(chosenCell);
+    console.log(playerOne);
+    console.log(playerTwo);
+    checkWinningCombos();
     switchPlayer();
   };
   return {
     nextMove:nextMove,
+    checkWinningCombos:checkWinningCombos,
     returnSymbol:returnSymbol,
   }
 };
@@ -237,11 +241,15 @@ document.addEventListener("DOMContentLoaded", () => {
     selectionBtns.removeChild(aiBtn);
     selectionBtns.appendChild(difficultyDiv);
 
-   btnNormal.addEventListener('click', () => {
-    board.displayBoardAI(btnNormal.innerHTML);
-   })
+    btnNormal.addEventListener('click', () => {
+      board.displayBoardAI(btnNormal.innerHTML);
+    });
 
-  })
+    });
+    btnHard.addEventListener('click', () => {
+      board.displayBoardAI(btnHard.innerHTML);
+    });
+  
 });
 
 
