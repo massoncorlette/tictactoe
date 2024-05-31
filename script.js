@@ -50,10 +50,9 @@ const gameBoard = function () {
 
       if (difficulty === "Normal") {
         randomMove = currentMoves[Math.floor(Math.random() * currentMoves.length )];
-      // for hard mode implement minmax? 
       }else if (difficulty === "Hard") {
         for (let i = 0; i < currentMoves.length; i++) {
-
+          
         }
       };
       return randomMove;
@@ -136,8 +135,7 @@ const gameFlow = function () {
     return activePlayer.symbol;
   }
 
-  function checkWinningCombos() {
-    let displayWinner = document.querySelector('#winner-display');
+  function checkWinningCombos(chosenCell) {
     for (let i = 0; i < winningCombos.length;i++){
       activePlayer.tracker = 0;
       for (let j = 0; j < 3;j++){
@@ -154,15 +152,17 @@ const gameFlow = function () {
               playerTwo.tracker = 0;
               playerOne.ownArray = [];
               playerTwo.ownArray = [];
+              switchPlayer();
               return;
             }
           };
         };
       };
     };
-  };
+  }
 
   const nextMove = function(chosenCell) {
+    let displayWinner = document.querySelector('#winner-display');
     for (let i = 0; i < activePlayer.ownArray.length; i++) {
       if (activePlayer.ownArray[i] === chosenCell) {
         console.log("invalid");
@@ -172,12 +172,34 @@ const gameFlow = function () {
     activePlayer.ownArray.push(chosenCell);
     console.log(playerOne);
     console.log(playerTwo);
-    checkWinningCombos();
+    // check winning combinations
+    for (let i = 0; i < winningCombos.length;i++){
+      activePlayer.tracker = 0;
+      for (let j = 0; j < 3;j++){
+        for (let k = 0; k < activePlayer.ownArray.length; k++){
+          if (activePlayer.ownArray[k] === winningCombos[i][j]) {
+            activePlayer.tracker += 1;
+            // upon winning
+            if (activePlayer.tracker === 3) {
+              activePlayer.incrementWins();
+              document.getElementById('dialog-box').showModal();
+              displayWinner.innerHTML = activePlayer.player + `${" Wins! "}` + activePlayer.player + `${" has "}` + activePlayer.wins + `${" wins."}`;
+              activePlayer.ownArray = [];
+              playerOne.tracker = 0;
+              playerTwo.tracker = 0;
+              playerOne.ownArray = [];
+              playerTwo.ownArray = [];
+              switchPlayer();
+              return;
+            }
+          };
+        };
+      };
+    };
     switchPlayer();
   };
   return {
     nextMove:nextMove,
-    checkWinningCombos:checkWinningCombos,
     returnSymbol:returnSymbol,
   }
 };
@@ -241,15 +263,11 @@ document.addEventListener("DOMContentLoaded", () => {
     selectionBtns.removeChild(aiBtn);
     selectionBtns.appendChild(difficultyDiv);
 
-    btnNormal.addEventListener('click', () => {
-      board.displayBoardAI(btnNormal.innerHTML);
-    });
+   btnNormal.addEventListener('click', () => {
+    board.displayBoardAI(btnNormal.innerHTML);
+   })
 
-    });
-    btnHard.addEventListener('click', () => {
-      board.displayBoardAI(btnHard.innerHTML);
-    });
-  
+  })
 });
 
 
