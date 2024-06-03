@@ -135,7 +135,8 @@ const gameFlow = function () {
     return activePlayer.symbol;
   }
 
-  function checkWinningCombos(chosenCell) {
+  function checkWinningCombos() {
+    let displayWinner = document.querySelector('#winner-display');
     for (let i = 0; i < winningCombos.length;i++){
       activePlayer.tracker = 0;
       for (let j = 0; j < 3;j++){
@@ -147,13 +148,11 @@ const gameFlow = function () {
               activePlayer.incrementWins();
               document.getElementById('dialog-box').showModal();
               displayWinner.innerHTML = activePlayer.player + `${" Wins! "}` + activePlayer.player + `${" has "}` + activePlayer.wins + `${" wins."}`;
-              activePlayer.ownArray = [];
               playerOne.tracker = 0;
               playerTwo.tracker = 0;
               playerOne.ownArray = [];
               playerTwo.ownArray = [];
-              switchPlayer();
-              return;
+              return 1;
             }
           };
         };
@@ -173,34 +172,20 @@ const gameFlow = function () {
     console.log(playerOne);
     console.log(playerTwo);
     // check winning combinations
-    for (let i = 0; i < winningCombos.length;i++){
-      activePlayer.tracker = 0;
-      for (let j = 0; j < 3;j++){
-        for (let k = 0; k < activePlayer.ownArray.length; k++){
-          if (activePlayer.ownArray[k] === winningCombos[i][j]) {
-            activePlayer.tracker += 1;
-            // upon winning
-            if (activePlayer.tracker === 3) {
-              activePlayer.incrementWins();
-              document.getElementById('dialog-box').showModal();
-              displayWinner.innerHTML = activePlayer.player + `${" Wins! "}` + activePlayer.player + `${" has "}` + activePlayer.wins + `${" wins."}`;
-              activePlayer.ownArray = [];
-              playerOne.tracker = 0;
-              playerTwo.tracker = 0;
-              playerOne.ownArray = [];
-              playerTwo.ownArray = [];
-              switchPlayer();
-              return;
-            }
-          };
-        };
-      };
-    };
+    if (checkWinningCombos() === 1) {
+      activePlayer = playerOne;
+      return;
+    }
+    if (activePlayer.ownArray.length === 5) {
+      document.getElementById('dialog-box').showModal();
+      displayWinner.innerHTML = "Uh oh... TIE Game!"
+    }
     switchPlayer();
   };
   return {
     nextMove:nextMove,
     returnSymbol:returnSymbol,
+    checkWinningCombos:checkWinningCombos
   }
 };
 let game = gameFlow();
@@ -266,7 +251,6 @@ document.addEventListener("DOMContentLoaded", () => {
    btnNormal.addEventListener('click', () => {
     board.displayBoardAI(btnNormal.innerHTML);
    })
-
   })
 });
 
